@@ -1,15 +1,15 @@
 import 'package:crm_pro/common/app_colors.dart';
 import 'package:crm_pro/common/app_constants.dart';
 import 'package:crm_pro/common/app_strings.dart';
-import 'package:crm_pro/views/sign_up/sign_up_screen.dart';
+import 'package:crm_pro/views/login/login_screen.dart';
 import 'package:crm_pro/widgets/custom_text_field.dart';
 import 'package:crm_pro/widgets/heading_text.dart';
 import 'package:crm_pro/widgets/primary_button.dart';
 import 'package:crm_pro/widgets/secondary_button.dart';
 import 'package:flutter/material.dart';
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+class SignUpScreen extends StatelessWidget {
+  const SignUpScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -48,24 +48,31 @@ class LoginScreen extends StatelessWidget {
               ),
               SizedBox(height: AppDimensions.paddingLarge),
               CustomTextField(
+                // full name
+                label: AppStrings.fullNameLabel,
+                hint: AppStrings.fullNameHint,
+                icon: Icons.person,
+              ),
+              SizedBox(height: AppDimensions.paddingLarge),
+              CustomTextField(
                 label: AppStrings.passwordLabel,
                 hint: AppStrings.passwordHint,
                 icon: Icons.lock,
                 isPassword: true,
               ),
               SizedBox(height: AppDimensions.paddingLarge),
-              PrimaryButton(label: AppStrings.loginButton, onPressed: () {}),
+              PrimaryButton(label: AppStrings.signUpButton, onPressed: () {}),
               SizedBox(height: AppDimensions.paddingLarge),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SubtitleText(AppStrings.dontYouHaveNotAccount),
+                  SubtitleText(AppStrings.alreadyHaveAccount),
                   SecondaryButton(
-                    label: AppStrings.signUpButton,
+                    label: AppStrings.signIn,
                     onPressed: () {
                       Navigator.of(context).pushReplacement(
                         MaterialPageRoute(
-                          builder: (context) => const SignUpScreen(),
+                          builder: (context) => const LoginScreen(),
                         ),
                       );
                     },
