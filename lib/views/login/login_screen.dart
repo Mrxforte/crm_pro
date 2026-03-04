@@ -10,6 +10,7 @@ class LoginScreen extends StatelessWidget {
         autovalidateMode: AutovalidateMode.onUserInteraction,
         child: Column(
           children: [
+<<<<<<< HEAD
             // create your account bigger text
             Text(
               'Create your account',
@@ -20,6 +21,12 @@ class LoginScreen extends StatelessWidget {
               'To explore the world\'s exclusives',
               style: TextStyle(fontSize: 16),
             ),
+=======
+            // create your account
+            Text('Create your account'),
+            // to explore the worlds exclusives
+            Text('To explore the world\'s exclusives'),
+>>>>>>> d87634df6103c7c7870fa232d10e508268670a7b
             // image
             Image(image: AssetImage('assets/images/login_image.png')),
             // email input
@@ -37,6 +44,7 @@ class LoginScreen extends StatelessWidget {
               child: Text('Login'),
             ),
             // already have an account? sign in button
+<<<<<<< HEAD
             Row(
               children: [
                 // grey text already have an account? and sign in button styeled with primary color and text split into two lines sign in in button only
@@ -48,6 +56,13 @@ class LoginScreen extends StatelessWidget {
                   child: Text('Sign in'),
                 ),
               ],
+=======
+            TextButton(
+              onPressed: () {
+                // Handle sign in logic here
+              },
+              child: Text('Already have an account? Sign in'),
+>>>>>>> d87634df6103c7c7870fa232d10e508268670a7b
             ),
           ],
         ),
