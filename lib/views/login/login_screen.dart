@@ -1,3 +1,5 @@
+import 'package:crm_pro/common/app_colors.dart';
+import 'package:crm_pro/common/app_strings.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -6,50 +8,48 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.background,
       body: Form(
         autovalidateMode: AutovalidateMode.onUserInteraction,
-        child: Column(
-          children: [
-            // create your account bigger text
-            Text(
-              'Create your account',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            // to explore the worlds exclusives more smaller text
-            Text(
-              'To explore the world\'s exclusives',
-              style: TextStyle(fontSize: 16),
-            ),
-            // image
-            Image(image: AssetImage('assets/images/login_image.png')),
-            // email input
-            TextField(decoration: InputDecoration(labelText: 'Email')),
-            // password input
-            TextField(
-              decoration: InputDecoration(labelText: 'Password'),
-              obscureText: true,
-            ),
-            // login button
-            ElevatedButton(
-              onPressed: () {
-                // Handle login logic here
-              },
-              child: Text('Login'),
-            ),
-            // already have an account? sign in button
-            Row(
-              children: [
-                // grey text already have an account? and sign in button styeled with primary color and text split into two lines sign in in button only
-                Text('Already have an account?'),
-                TextButton(
-                  onPressed: () {
-                    // Handle sign in logic here text split into two lines signi in in button only
-                  },
-                  child: Text('Sign in'),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 32.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Create your account',
+                  AppStrings.createAccountTitle,
+                  style: Theme.of(context).textTheme.headlineSmall,
+              ),
+              Text(
+                'To explore the world\'s exclusives',
+                  AppStrings.createAccountSubtitle,
+                  style: Theme.of(context).textTheme.bodyMedium,
+              ),
+              SizedBox(height: 24),
+                const SizedBox(height: 24),
+                Image(image: AssetImage(AppStrings.loginImagePath), height: 150),
+                const SizedBox(height: 10),
+                TextField(decoration: InputDecoration(labelText: AppStrings.email)),
+                decoration: InputDecoration(
+                  decoration:
+                      InputDecoration(labelText: AppStrings.password),
                 ),
-              ],
-            ),
-          ],
+                obscureText: true,
+                const SizedBox(height: 24),
+                ElevatedButton(onPressed: () {}, child: Text(AppStrings.login)),
+              ElevatedButton(onPressed: () {}, child: Text('Login')),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                    Text(AppStrings.alreadyHaveAccount),
+                    TextButton(onPressed: () {}, child: Text(AppStrings.signIn)),
+                  TextButton(onPressed: () {}, child: Text('Sign in')),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
