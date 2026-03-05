@@ -124,8 +124,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         );
                         Navigator.of(context).pushReplacement(
                           MaterialPageRoute(
-                            builder: (context) =>
-                                LoginScreen(initialEmail: emailController.text),
+                            builder: (context) => LoginScreen(
+                              initialEmail: emailController.text,
+                              initialPassword: passwordController.text,
+                            ),
                           ),
                         );
                       }

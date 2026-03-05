@@ -16,8 +16,9 @@ import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   final String? initialEmail;
+  final String? initialPassword;
 
-  const LoginScreen({super.key, this.initialEmail});
+  const LoginScreen({super.key, this.initialEmail, this.initialPassword});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -33,7 +34,9 @@ class _LoginScreenState extends State<LoginScreen> {
     super.initState();
     formKey = GlobalKey<FormState>();
     emailController = TextEditingController(text: widget.initialEmail ?? '');
-    passwordController = TextEditingController();
+    passwordController = TextEditingController(
+      text: widget.initialPassword ?? '',
+    );
   }
 
   @override

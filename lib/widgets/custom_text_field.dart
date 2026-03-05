@@ -9,6 +9,7 @@ class CustomTextField extends StatefulWidget {
   final bool isPassword;
   final TextEditingController? controller;
   final String? Function(String?)? validator;
+  final Widget? suffixIcon;
 
   const CustomTextField({
     super.key,
@@ -18,6 +19,7 @@ class CustomTextField extends StatefulWidget {
     this.isPassword = false,
     this.controller,
     this.validator,
+    this.suffixIcon,
   });
 
   @override
@@ -55,18 +57,18 @@ class _CustomTextFieldState extends State<CustomTextField> {
             border: InputBorder.none,
             prefixIcon: Icon(widget.icon, color: AppColors.inputIconColor),
             suffixIcon: widget.isPassword
-                ? GestureDetector(
-                    onTap: () {
+                ? IconButton(
+                    onPressed: () {
                       setState(() {
                         _obscureText = !_obscureText;
                       });
                     },
-                    child: Icon(
+                    icon: Icon(
                       _obscureText ? Icons.visibility_off : Icons.visibility,
                       color: AppColors.inputIconColor,
                     ),
                   )
-                : null,
+                : widget.suffixIcon,
           ),
         ),
       ],

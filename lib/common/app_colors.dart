@@ -7,7 +7,7 @@ class AppColors {
   static const Color background = Colors.white;
   static const Color textPrimary = Colors.black87;
   static const Color textSecondary = Colors.black54;
-  static const Color primary = Colors.blue;
+  static const Color primary = Color(0xFF616161);
   static const Color border = Colors.grey;
 
   // Input Field Colors
@@ -16,6 +16,6 @@ class AppColors {
   static const Color inputIconColor = Colors.black54;
 
   // Button Colors
-  static const Color buttonPrimary = Colors.blue;
+  static const Color buttonPrimary = Color(0xFF616161);
   static const Color buttonText = Colors.white;
 }
