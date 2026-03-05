@@ -18,7 +18,7 @@ class AuthController {
 
       // Add user details to Firestore
       try {
-        await firestore.collection('users').doc(userCredential.user!.uid).set({
+        await firestore.collection('buyers').doc(userCredential.user!.uid).set({
           'fullname': fullname,
           'email': email,
           'createdAt': FieldValue.serverTimestamp(),
