@@ -10,13 +10,38 @@ import 'package:crm_pro/widgets/primary_button.dart';
 import 'package:crm_pro/widgets/secondary_button.dart';
 import 'package:flutter/material.dart';
 
-class SignUpScreen extends StatelessWidget {
-  SignUpScreen({super.key});
-  final formKey = GlobalKey<FormState>();
-  final emailController = TextEditingController();
-  final fullNameController = TextEditingController();
-  final passwordController = TextEditingController();
-  AuthController authController = AuthController();
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({super.key});
+
+  @override
+  State<SignUpScreen> createState() => _SignUpScreenState();
+}
+
+class _SignUpScreenState extends State<SignUpScreen> {
+  late GlobalKey<FormState> formKey;
+  late TextEditingController emailController;
+  late TextEditingController fullNameController;
+  late TextEditingController passwordController;
+  late AuthController authController;
+
+  @override
+  void initState() {
+    super.initState();
+    formKey = GlobalKey<FormState>();
+    emailController = TextEditingController();
+    fullNameController = TextEditingController();
+    passwordController = TextEditingController();
+    authController = AuthController();
+  }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    fullNameController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

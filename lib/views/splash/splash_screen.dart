@@ -1,6 +1,5 @@
 import 'package:crm_pro/common/app_colors.dart';
 import 'package:crm_pro/common/app_strings.dart';
-import 'package:crm_pro/views/login/login_screen.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
