@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       title: AppStrings.appTitle,
       theme: AppTheme.lightTheme,
       home: const SplashScreen(),
-      routes: {'/login': (context) => const LoginScreen()},
+      routes: {'/login': (context) => LoginScreen()},
       debugShowCheckedModeBanner: false,
     );
   }
