@@ -7,6 +7,8 @@ class AppColors {
   static const Color background = Colors.white;
   static const Color textPrimary = Colors.black87;
   static const Color textSecondary = Colors.black54;
+  static const Color primary = Colors.blue;
+  static const Color border = Colors.grey;
 
   // Input Field Colors
   static const Color inputFill = Color(0xFFEEEEEE);

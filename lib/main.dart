@@ -2,6 +2,7 @@ import 'package:crm_pro/common/app_strings.dart';
 import 'package:crm_pro/common/app_theme.dart';
 import 'package:crm_pro/core/service_locator.dart';
 import 'package:crm_pro/views/login/login_screen.dart';
+import 'package:crm_pro/views/main/main_screen.dart';
 import 'package:crm_pro/views/splash/splash_screen.dart';
 import 'package:crm_pro/viewmodels/auth_viewmodel.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +32,10 @@ class MyApp extends StatelessWidget {
         title: AppStrings.appTitle,
         theme: AppTheme.lightTheme,
         home: const SplashScreen(),
-        routes: {'/login': (context) => const LoginScreen()},
+        routes: {
+          '/login': (context) => const LoginScreen(),
+          '/home': (context) => const MainScreen(),
+        },
         debugShowCheckedModeBanner: false,
       ),
     );
