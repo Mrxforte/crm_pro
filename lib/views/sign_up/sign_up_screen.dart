@@ -2,13 +2,14 @@ import 'package:crm_pro/common/app_colors.dart';
 import 'package:crm_pro/common/app_constants.dart';
 import 'package:crm_pro/common/app_strings.dart';
 import 'package:crm_pro/common/validators.dart';
-import 'package:crm_pro/controllers/auth_controller.dart';
+import 'package:crm_pro/viewmodels/auth_viewmodel.dart';
 import 'package:crm_pro/views/login/login_screen.dart';
 import 'package:crm_pro/widgets/custom_text_field.dart';
 import 'package:crm_pro/widgets/heading_text.dart';
 import 'package:crm_pro/widgets/primary_button.dart';
 import 'package:crm_pro/widgets/secondary_button.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -22,7 +23,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   late TextEditingController emailController;
   late TextEditingController fullNameController;
   late TextEditingController passwordController;
-  late AuthController authController;
 
   @override
   void initState() {
@@ -31,7 +31,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
     emailController = TextEditingController();
     fullNameController = TextEditingController();
     passwordController = TextEditingController();
-    authController = AuthController();
   }
 
   @override
@@ -103,21 +102,39 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 label: AppStrings.signUpButton,
                 onPressed: () async {
                   if (formKey.currentState!.validate()) {
-                    String result = await authController.registerNewUser(
-                      emailController.text,
-                      fullNameController.text,
-                      passwordController.text,
+                    final authViewModel = context.read<AuthViewModel>();
+                    final success = await authViewModel.registerNewUser(
+                      email: emailController.text,
+                      fullname: fullNameController.text,
+                      password: passwordController.text,
                     );
-                    if (result == "User registered successfully") {
-                      // ignore: use_build_context_synchronously
-                      Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              LoginScreen(initialEmail: emailController.text),
-                        ),
-                      );
+
+                    if (success) {
+                      if (mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(authViewModel.message),
+                            backgroundColor: Colors.green,
+                          ),
+                        );
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                            builder: (context) => LoginScreen(
+                              initialEmail: emailController.text,
+                            ),
+                          ),
+                        );
+                      }
+                    } else {
+                      if (mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(authViewModel.message),
+                            backgroundColor: Colors.red,
+                          ),
+                        );
+                      }
                     }
-                    debugPrint(result);
                   } else {
                     debugPrint('Form is invalid, show errors');
                   }

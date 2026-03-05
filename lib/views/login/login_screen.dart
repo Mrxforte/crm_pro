@@ -2,13 +2,14 @@ import 'package:crm_pro/common/app_colors.dart';
 import 'package:crm_pro/common/app_constants.dart';
 import 'package:crm_pro/common/app_strings.dart';
 import 'package:crm_pro/common/validators.dart';
-import 'package:crm_pro/controllers/auth_controller.dart';
+import 'package:crm_pro/viewmodels/auth_viewmodel.dart';
 import 'package:crm_pro/views/sign_up/sign_up_screen.dart';
 import 'package:crm_pro/widgets/custom_text_field.dart';
 import 'package:crm_pro/widgets/heading_text.dart';
 import 'package:crm_pro/widgets/primary_button.dart';
 import 'package:crm_pro/widgets/secondary_button.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   final String? initialEmail;
@@ -23,7 +24,6 @@ class _LoginScreenState extends State<LoginScreen> {
   late GlobalKey<FormState> formKey;
   late TextEditingController emailController;
   late TextEditingController passwordController;
-  late AuthController authController;
 
   @override
   void initState() {
@@ -31,7 +31,6 @@ class _LoginScreenState extends State<LoginScreen> {
     formKey = GlobalKey<FormState>();
     emailController = TextEditingController(text: widget.initialEmail ?? '');
     passwordController = TextEditingController();
-    authController = AuthController();
   }
 
   @override
@@ -93,17 +92,34 @@ class _LoginScreenState extends State<LoginScreen> {
                 label: AppStrings.loginButton,
                 onPressed: () async {
                   if (formKey.currentState!.validate()) {
-                    String result = await authController.loginUser(
-                      emailController.text,
-                      passwordController.text,
+                    final authViewModel =
+                        context.read<AuthViewModel>();
+                    final success = await authViewModel.loginUser(
+                      email: emailController.text,
+                      password: passwordController.text,
                     );
-                    if (result == "User logged in successfully") {
-                      // ignore: use_build_context_synchronously
-                      Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(builder: (context) => LoginScreen()),
-                      );
+                    
+                    if (success) {
+                      if (mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(authViewModel.message),
+                            backgroundColor: Colors.green,
+                          ),
+                        );
+                        // Navigate to home screen
+                        Navigator.of(context).pushReplacementNamed('/home');
+                      }
+                    } else {
+                      if (mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(authViewModel.message),
+                            backgroundColor: Colors.red,
+                          ),
+                        );
+                      }
                     }
-                    debugPrint(result);
                   } else {
                     debugPrint('Form is invalid, show errors');
                   }
