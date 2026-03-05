@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key});
+  ProfileScreen({super.key});
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
@@ -37,11 +37,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   shape: BoxShape.circle,
                   color: AppColors.primary,
                 ),
-                child: const Icon(
-                  Icons.person,
-                  size: 50,
-                  color: Colors.white,
-                ),
+                child: const Icon(Icons.person, size: 50, color: Colors.white),
               ),
               SizedBox(height: AppDimensions.paddingLarge),
 
@@ -56,7 +52,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
               // Logout Button
               PrimaryButton(
                 label: 'Logout',
-                onPressed: () => _showLogoutDialog(context),
+                onPressed: () {
+                  _showLogoutDialog(context);
+                },
               ),
             ],
           ),
@@ -74,10 +72,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           children: [
             const Text(
               'User Information',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: AppDimensions.paddingMedium),
             _buildInfoRow('Email', 'user@example.com'),
@@ -95,10 +90,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
-          label,
-          style: const TextStyle(fontWeight: FontWeight.bold),
-        ),
+        Text(label, style: const TextStyle(fontWeight: FontWeight.bold)),
         Text(value),
       ],
     );
@@ -107,42 +99,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget _buildMenuSection() {
     return Column(
       children: [
-        _buildMenuTile(
-          'Edit Profile',
-          Icons.edit,
-          () {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Edit profile feature coming soon')),
-            );
-          },
-        ),
-        _buildMenuTile(
-          'Settings',
-          Icons.settings,
-          () {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Settings feature coming soon')),
-            );
-          },
-        ),
-        _buildMenuTile(
-          'Help & Support',
-          Icons.help,
-          () {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Help feature coming soon')),
-            );
-          },
-        ),
-        _buildMenuTile(
-          'Privacy Policy',
-          Icons.privacy_tip,
-          () {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Privacy policy feature coming soon')),
-            );
-          },
-        ),
+        _buildMenuTile('Edit Profile', Icons.edit, () {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Edit profile feature coming soon')),
+          );
+        }),
+        _buildMenuTile('Settings', Icons.settings, () {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Settings feature coming soon')),
+          );
+        }),
+        _buildMenuTile('Help & Support', Icons.help, () {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Help feature coming soon')),
+          );
+        }),
+        _buildMenuTile('Privacy Policy', Icons.privacy_tip, () {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Privacy policy feature coming soon')),
+          );
+        }),
       ],
     );
   }
@@ -174,10 +150,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 final authViewModel = context.read<AuthViewModel>();
                 await authViewModel.logout();
                 if (context.mounted) {
-                  Navigator.of(context).pushNamedAndRemoveUntil(
-                    '/login',
-                    (route) => false,
-                  );
+                  Navigator.of(
+                    context,
+                  ).pushNamedAndRemoveUntil('/login', (route) => false);
                 }
               },
               child: const Text('Logout'),

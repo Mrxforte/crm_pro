@@ -1,7 +1,10 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:crm_pro/common/app_colors.dart';
 import 'package:crm_pro/common/app_constants.dart';
 import 'package:crm_pro/common/app_strings.dart';
 import 'package:crm_pro/common/validators.dart';
+import 'package:crm_pro/util/routes.dart';
 import 'package:crm_pro/viewmodels/auth_viewmodel.dart';
 import 'package:crm_pro/views/login/login_screen.dart';
 import 'package:crm_pro/widgets/custom_text_field.dart';
@@ -43,6 +46,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final authViewModel = context.watch<AuthViewModel>();
+
     return Scaffold(
       backgroundColor: AppColors.background,
       body: Form(
@@ -100,9 +105,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
               SizedBox(height: AppDimensions.paddingLarge),
               PrimaryButton(
                 label: AppStrings.signUpButton,
+                isLoading: authViewModel.isLoading,
                 onPressed: () async {
                   if (formKey.currentState!.validate()) {
-                    final authViewModel = context.read<AuthViewModel>();
                     final success = await authViewModel.registerNewUser(
                       email: emailController.text,
                       fullname: fullNameController.text,
@@ -119,9 +124,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         );
                         Navigator.of(context).pushReplacement(
                           MaterialPageRoute(
-                            builder: (context) => LoginScreen(
-                              initialEmail: emailController.text,
-                            ),
+                            builder: (context) =>
+                                LoginScreen(initialEmail: emailController.text),
                           ),
                         );
                       }
@@ -148,12 +152,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   SecondaryButton(
                     label: AppStrings.signIn,
                     onPressed: () {
-                      Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              LoginScreen(initialEmail: emailController.text),
-                        ),
-                      );
+                      Navigator.of(
+                        context,
+                      ).pushReplacementNamed(AppRoutes.login);
                     },
                   ),
                 ],

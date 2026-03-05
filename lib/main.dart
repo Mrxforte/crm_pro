@@ -1,9 +1,7 @@
 import 'package:crm_pro/common/app_strings.dart';
 import 'package:crm_pro/common/app_theme.dart';
 import 'package:crm_pro/core/service_locator.dart';
-import 'package:crm_pro/views/login/login_screen.dart';
-import 'package:crm_pro/views/main/main_screen.dart';
-import 'package:crm_pro/views/splash/splash_screen.dart';
+import 'package:crm_pro/util/routes.dart';
 import 'package:crm_pro/viewmodels/auth_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -24,18 +22,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (_) => getIt<AuthViewModel>(),
-        ),
+        ChangeNotifierProvider(create: (_) => getIt<AuthViewModel>()),
       ],
       child: MaterialApp(
         title: AppStrings.appTitle,
         theme: AppTheme.lightTheme,
-        home: const SplashScreen(),
-        routes: {
-          '/login': (context) => const LoginScreen(),
-          '/home': (context) => const MainScreen(),
-        },
+        initialRoute: AppRoutes.splash,
+        onGenerateRoute: AppRoutes.onGeneratedRoute,
         debugShowCheckedModeBanner: false,
       ),
     );

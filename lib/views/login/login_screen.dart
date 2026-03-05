@@ -1,7 +1,10 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:crm_pro/common/app_colors.dart';
 import 'package:crm_pro/common/app_constants.dart';
 import 'package:crm_pro/common/app_strings.dart';
 import 'package:crm_pro/common/validators.dart';
+import 'package:crm_pro/util/routes.dart';
 import 'package:crm_pro/viewmodels/auth_viewmodel.dart';
 import 'package:crm_pro/views/sign_up/sign_up_screen.dart';
 import 'package:crm_pro/widgets/custom_text_field.dart';
@@ -42,6 +45,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final authViewModel = context.watch<AuthViewModel>();
+
     return Scaffold(
       backgroundColor: AppColors.background,
       body: Form(
@@ -90,15 +95,14 @@ class _LoginScreenState extends State<LoginScreen> {
               SizedBox(height: AppDimensions.paddingLarge),
               PrimaryButton(
                 label: AppStrings.loginButton,
+                isLoading: authViewModel.isLoading,
                 onPressed: () async {
                   if (formKey.currentState!.validate()) {
-                    final authViewModel =
-                        context.read<AuthViewModel>();
                     final success = await authViewModel.loginUser(
                       email: emailController.text,
                       password: passwordController.text,
                     );
-                    
+
                     if (success) {
                       if (mounted) {
                         ScaffoldMessenger.of(context).showSnackBar(
@@ -107,8 +111,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             backgroundColor: Colors.green,
                           ),
                         );
-                        // Navigate to home screen
-                        Navigator.of(context).pushReplacementNamed('/home');
+                        Navigator.of(
+                          context,
+                        ).pushReplacementNamed(AppRoutes.home);
                       }
                     } else {
                       if (mounted) {
@@ -134,7 +139,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     label: AppStrings.signUpButton,
                     onPressed: () {
                       Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(builder: (context) => SignUpScreen()),
+                        MaterialPageRoute(
+                          builder: (context) => const SignUpScreen(),
+                        ),
                       );
                     },
                   ),

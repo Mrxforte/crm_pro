@@ -1,5 +1,6 @@
 import 'package:crm_pro/common/app_colors.dart';
 import 'package:crm_pro/common/app_strings.dart';
+import 'package:crm_pro/util/routes.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -19,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void _navigateToLogin() {
     Future.delayed(const Duration(seconds: 3), () {
       if (mounted) {
-        Navigator.of(context).pushReplacementNamed('/login');
+        Navigator.of(context).pushReplacementNamed(AppRoutes.login);
       }
     });
   }
