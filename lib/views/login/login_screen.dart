@@ -1,6 +1,8 @@
 import 'package:crm_pro/common/app_colors.dart';
 import 'package:crm_pro/common/app_constants.dart';
 import 'package:crm_pro/common/app_strings.dart';
+import 'package:crm_pro/common/validators.dart';
+import 'package:crm_pro/controllers/auth_controller.dart';
 import 'package:crm_pro/views/sign_up/sign_up_screen.dart';
 import 'package:crm_pro/widgets/custom_text_field.dart';
 import 'package:crm_pro/widgets/heading_text.dart';
@@ -8,12 +10,37 @@ import 'package:crm_pro/widgets/primary_button.dart';
 import 'package:crm_pro/widgets/secondary_button.dart';
 import 'package:flutter/material.dart';
 
-class LoginScreen extends StatelessWidget {
-  LoginScreen({super.key});
+class LoginScreen extends StatefulWidget {
+  final String? initialEmail;
 
-  final formKey = GlobalKey<FormState>();
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
+  const LoginScreen({super.key, this.initialEmail});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  late GlobalKey<FormState> formKey;
+  late TextEditingController emailController;
+  late TextEditingController passwordController;
+  late AuthController authController;
+
+  @override
+  void initState() {
+    super.initState();
+    formKey = GlobalKey<FormState>();
+    emailController = TextEditingController(text: widget.initialEmail ?? '');
+    passwordController = TextEditingController();
+    authController = AuthController();
+  }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,28 +77,12 @@ class LoginScreen extends StatelessWidget {
                 label: AppStrings.emailLabel,
                 hint: AppStrings.emailHint,
                 icon: Icons.email,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Email cannot be empty';
-                  }
-                  if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
-                    return 'Please enter a valid email address';
-                  }
-                  return null;
-                },
+                validator: Validators.validateEmail,
               ),
               SizedBox(height: AppDimensions.paddingLarge),
               CustomTextField(
                 controller: passwordController,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Password cannot be empty';
-                  }
-                  if (value.length < 6) {
-                    return 'Password must be at least 6 characters';
-                  }
-                  return null;
-                },
+                validator: Validators.validatePassword,
                 label: AppStrings.passwordLabel,
                 hint: AppStrings.passwordHint,
                 icon: Icons.lock,
@@ -80,9 +91,19 @@ class LoginScreen extends StatelessWidget {
               SizedBox(height: AppDimensions.paddingLarge),
               PrimaryButton(
                 label: AppStrings.loginButton,
-                onPressed: () {
+                onPressed: () async {
                   if (formKey.currentState!.validate()) {
-                    debugPrint('Form is valid, proceed with login');
+                    String result = await authController.loginUser(
+                      emailController.text,
+                      passwordController.text,
+                    );
+                    if (result == "User logged in successfully") {
+                      // ignore: use_build_context_synchronously
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(builder: (context) => LoginScreen()),
+                      );
+                    }
+                    debugPrint(result);
                   } else {
                     debugPrint('Form is invalid, show errors');
                   }

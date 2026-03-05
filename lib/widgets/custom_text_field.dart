@@ -40,8 +40,9 @@ class _CustomTextFieldState extends State<CustomTextField> {
       children: [
         Text(widget.label, style: Theme.of(context).textTheme.bodyLarge),
         SizedBox(height: AppDimensions.paddingSmall),
-        TextField(
+        TextFormField(
           controller: widget.controller,
+          validator: widget.validator,
           obscureText: _obscureText,
           decoration: InputDecoration(
             fillColor: AppColors.inputFill,

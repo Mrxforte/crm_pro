@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "744663912029",
+    "firebase_url": "https://orders-c1f47-default-rtdb.firebaseio.com",
+    "project_id": "orders-c1f47",
+    "storage_bucket": "orders-c1f47.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:744663912029:android:c1a937f12fd1eeae7c07b4",
+        "android_client_info": {
+          "package_name": "com.example.crm_pro"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMmu5aC2o-NQi7mY9mEQolKTIpbsr2f5g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

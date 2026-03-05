@@ -1,6 +1,7 @@
 import 'package:crm_pro/common/app_colors.dart';
 import 'package:crm_pro/common/app_constants.dart';
 import 'package:crm_pro/common/app_strings.dart';
+import 'package:crm_pro/common/validators.dart';
 import 'package:crm_pro/controllers/auth_controller.dart';
 import 'package:crm_pro/views/login/login_screen.dart';
 import 'package:crm_pro/widgets/custom_text_field.dart';
@@ -22,6 +23,7 @@ class SignUpScreen extends StatelessWidget {
       backgroundColor: AppColors.background,
       body: Form(
         key: formKey,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         child: Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: AppDimensions.paddingXLarge,
@@ -51,6 +53,7 @@ class SignUpScreen extends StatelessWidget {
                 label: AppStrings.emailLabel,
                 hint: AppStrings.emailHint,
                 icon: Icons.email,
+                validator: Validators.validateEmail,
               ),
               SizedBox(height: AppDimensions.paddingLarge),
               CustomTextField(
@@ -59,6 +62,7 @@ class SignUpScreen extends StatelessWidget {
                 label: AppStrings.fullNameLabel,
                 hint: AppStrings.fullNameHint,
                 icon: Icons.person,
+                validator: Validators.validateFullName,
               ),
               SizedBox(height: AppDimensions.paddingLarge),
               CustomTextField(
@@ -67,6 +71,7 @@ class SignUpScreen extends StatelessWidget {
                 hint: AppStrings.passwordHint,
                 icon: Icons.lock,
                 isPassword: true,
+                validator: Validators.validatePassword,
               ),
               SizedBox(height: AppDimensions.paddingLarge),
               PrimaryButton(
@@ -78,6 +83,15 @@ class SignUpScreen extends StatelessWidget {
                       fullNameController.text,
                       passwordController.text,
                     );
+                    if (result == "User registered successfully") {
+                      // ignore: use_build_context_synchronously
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              LoginScreen(initialEmail: emailController.text),
+                        ),
+                      );
+                    }
                     debugPrint(result);
                   } else {
                     debugPrint('Form is invalid, show errors');
@@ -93,7 +107,10 @@ class SignUpScreen extends StatelessWidget {
                     label: AppStrings.signIn,
                     onPressed: () {
                       Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(builder: (context) => LoginScreen()),
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              LoginScreen(initialEmail: emailController.text),
+                        ),
                       );
                     },
                   ),
